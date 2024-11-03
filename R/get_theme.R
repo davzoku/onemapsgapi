@@ -43,13 +43,12 @@
 
 get_theme <- function(token, theme, extents = NULL, return_info = FALSE, read = "tibble") {
   # query API
-  url <- "https://developers.onemap.sg/privateapi/themesvc/retrieveTheme?"
+  url <- "https://www.onemap.gov.sg/api/public/themesvc/retrieveTheme?"
   query <- paste(url,
                  "queryName=", theme,
-                 "&token=", token,
                  sep = "")
   if (!is.null(extents)) {query <- paste(query, "&extents=", extents, sep = "")}
-  response <- GET(query)
+  response <- GET(query, add_headers(Authorization = paste("Bearer", token)))
   query_results <- content(response)
 
   # error check: invalid request
